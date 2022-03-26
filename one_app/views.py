@@ -1,8 +1,12 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("This is a hello post")
+    info = {
+        'message': "This is a message"
+    }
+    return render(request, 'one_app/index.html', context=info)
 
 
 def show_age(request, age):
