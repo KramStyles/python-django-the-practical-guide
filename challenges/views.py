@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.shortcuts import reverse, redirect
 
 # Create your views here.
 
@@ -12,6 +12,18 @@ daily_challenges = {
         "saturday": "Build your empire",
         "sunday": "Think and worry less",
     }
+
+def challenge_home(request):
+    iterated_list = ""
+
+    for day in daily_challenges:
+        iterated_list += f"<li><a href='{reverse('weekly-activities', args=[day])}'>{day.title()}</a></li>"
+    response_data = f"""
+        <ul>
+            {iterated_list}
+        </ul>
+    """
+    return HttpResponse(response_data)
 
 def index(request, day):
     # result = daily_challenges.get(month.lower()) or "Month not listed"
