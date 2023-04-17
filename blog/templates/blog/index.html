@@ -1,0 +1,35 @@
+{% extends "challenges/layouts/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-header">Welcome</div>
+        <div class="card-body">
+            <h4 class="card-title">This is a blog built from the Practical Django Course</h4>
+            <p class="card-text">This is just a blog page and with time it's going to be filled with blog posts.
+                There would be cards below containing different articles and their header images.
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        {% for item in '12345678'|make_list %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <h3 class="card-header">Card header</h3>
+                    <div class="card-body p-0"></div>
+                    <span class="d-none">
+                        {% cycle "img1.jpeg" "img2.jpeg" "img3.jpeg" "img4.jpeg" "img5.jpeg" as image_name %}
+                    </span>
+                    <img src="{% static "blog/images/uploads/"|add:image_name %}" alt="Image"
+                         class="img-thumbnail rounded">
+                    <div class="card-body">
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}
