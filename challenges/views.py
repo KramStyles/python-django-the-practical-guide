@@ -52,4 +52,5 @@ def daily_challenge_by_number(request, day):
             'title': "page not found",
             "reason": str(err)
         }
+        # raise Http404()
         return render(request, "challenges/404.html", context)
