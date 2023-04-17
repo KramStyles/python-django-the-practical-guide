@@ -1,0 +1,17 @@
+{% extends "challenges/layouts/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 offset-1">
+            <div class="card mb-3">
+            <h3 class="card-header">{{ title }}</h3>
+            <div class="card-body"></div>
+            <img src="{% static "blog/images/uploads/"|add:image %}" alt="Image" width="100%"
+                 class="img-thumbnail rounded">
+            <div class="card-body">
+                {{ data|safe }}
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

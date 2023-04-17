@@ -15,7 +15,7 @@
         {% for item in '12345678'|make_list %}
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <h3 class="card-header">Card header</h3>
+                    <small class="card-header fw-bold text-center">Title</small>
                     <div class="card-body p-0"></div>
                     <span class="d-none">
                         {% cycle "img1.jpeg" "img2.jpeg" "img3.jpeg" "img4.jpeg" "img5.jpeg" as image_name %}
@@ -24,8 +24,10 @@
                          class="img-thumbnail rounded">
                     <div class="card-body">
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the
-                            card's content.</p>
+                            the card's content.</p>
+                        <div class="d-grid">
+                            <a class="btn btn-outline-primary btn-sm" href="{% url "blog-post-details" item %}">View Post</a>
+                        </div>
                     </div>
                 </div>
             </div>
