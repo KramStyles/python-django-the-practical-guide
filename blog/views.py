@@ -49,6 +49,6 @@ def post_details(request, slug):
     context = {
         "title": f"News Post {slug}",
         "data": dummy_data,
-        "image": f"img{slug}.jpeg"
+        "image": f"img{slug}.jpeg",
     }
     return render(request, "blog/post-detail.html", context)
