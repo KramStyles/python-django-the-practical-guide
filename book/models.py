@@ -6,12 +6,30 @@ from django.utils.text import slugify
 # Create your models here.
 
 
+class Address(models.Model):
+    street = models.CharField(max_length=80)
+    postal_code = models.CharField(max_length=10)
+    city = models.CharField(max_length=50)
+
+    class Meta:
+        """Metaclass to modify Address Model"""
+        verbose_name_plural = "Address Entries"
+
+    def __str__(self):
+        return self.street
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    # Not adding related_name here because it's 1to1 and author is default
+    address = models.OneToOneField(Address, models.PROTECT, null=True)
+
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}".title()
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}".title()
+        return self.full_name()
 
 
 class Book(models.Model):
@@ -20,7 +38,9 @@ class Book(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     author = models.ForeignKey(
-        Author, on_delete=models.PROTECT, null=True,
+        Author,
+        on_delete=models.PROTECT,
+        null=True,
         related_name="books"
         # Added related name, so we can reverse relationship from author.
         #  E.g. rowling_books = Book.objects.filter(author__last_name="Rowling")
