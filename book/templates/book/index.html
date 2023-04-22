@@ -5,8 +5,9 @@
     <p class="fs-5">Welcome to the book list</p>
     </div>
     <div class="list-group">
+{#    <a href="{% url "book-detail" book.pk %}" class="list-group-item list-group-item-action">{{ book.title|title }}. </a>#}
         {% for book in books %}
-            <a href="{% url "book-detail" book.pk %}" class="list-group-item list-group-item-action">{{ book.title|title }}. </a>
+            <a href="{{ book.get_absolute_url }}" class="list-group-item list-group-item-action">{{ book.title|title }}. </a>
         {% endfor %}
     </div>
 {% endblock %}
