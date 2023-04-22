@@ -11,7 +11,7 @@ class Author(models.Model):
     last_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name}".title()
 
 
 class Book(models.Model):
@@ -19,7 +19,16 @@ class Book(models.Model):
     rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    author = models.ForeignKey(Author, on_delete=models.PROTECT, null=True)
+    author = models.ForeignKey(
+        Author, on_delete=models.PROTECT, null=True,
+        related_name="books"
+        # Added related name, so we can reverse relationship from author.
+        #  E.g. rowling_books = Book.objects.filter(author__last_name="Rowling")
+        # rowling_books => [Harry porter 1, Harry Porter 2]
+        # ##
+        # rowling = Author.objects.get(last_name = "Rowling")
+        # rowling_books = rowling.books.all()
+    )
     is_bestselling = models.BooleanField(default=False, verbose_name="Is Best-Seller?")
 
     # Adding editable = False would hide the field in the admin
