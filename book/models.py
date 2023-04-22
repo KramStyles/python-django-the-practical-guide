@@ -12,8 +12,10 @@ class Book(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     author = models.CharField(max_length=100, null=True)
-    is_bestselling = models.BooleanField(default=False)
-    slug = models.SlugField(default="", null=False, db_index=True)
+    is_bestselling = models.BooleanField(default=False, verbose_name="Is Best-Seller?")
+
+    # Adding editable = False would hide the field in the admin
+    slug = models.SlugField(default="", blank=True, db_index=True)
 
     def __str__(self):
         return f"{self.title} by {self.author}"
@@ -27,7 +29,8 @@ class Book(models.Model):
         *args,
         **kwargs,
     ):
-        self.slug = slugify(self.title)
+        # taking this out because of pre-population
+        # self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
