@@ -51,3 +51,9 @@ def daily_challenge_by_number(request, day):
         context = {"title": "page not found", "reason": str(err)}
         # raise Http404()
         return render(request, "challenges/404.html", context)
+
+
+def not_found_page(request):
+    # Todo: Ensure you fix this up for valid 404 page so when we call raise http404, this shows
+    context = {"title": "page not found", "reason": "We can't find what you are searching for"}
+    return render(request, "challenges/404.html", context)

@@ -6,7 +6,7 @@
     </div>
     <div class="list-group">
         {% for book in books %}
-            <a href="#" class="list-group-item list-group-item-action">{{ book.title|title }}. </a>
+            <a href="{% url "book-detail" book.pk %}" class="list-group-item list-group-item-action">{{ book.title|title }}. </a>
         {% endfor %}
     </div>
 {% endblock %}
