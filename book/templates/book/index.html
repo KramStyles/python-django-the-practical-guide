@@ -1,0 +1,18 @@
+{% extends "challenges/layouts/base.html" %}
+{% block content %}
+    <div class="jumbotron shadow">
+        <h1>Book List</h1>
+        <p class="fs-5">Welcome to the book list</p>
+        <p class="mb-0">Total number of books: <span class="fw-bold text-primary">{{ total_books }}</span></p>
+        <p class="mb-0">Average ratings: <span class="fw-bold text-primary">{{ average_ratings.rating__avg }}</span></p>
+        <p class="mb-0">Minimum rating: <span class="fw-bold text-primary">{{ average_ratings.rating__min }}</span></p>
+    </div>
+    <div class="list-group">
+        {#    <a href="{% url "book-detail" book.pk %}" class="list-group-item list-group-item-action">{{ book.title|title }}. </a>#}
+        {% for book in books %}
+            <a href="{{ book.get_absolute_url }}"
+               class="list-group-item list-group-item-action"><i
+                    class="bi bi-chevron-double-right text-primary"></i> {{ book.title|title }}. </a>
+        {% endfor %}
+    </div>
+{% endblock %}

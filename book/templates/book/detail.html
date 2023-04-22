@@ -1,0 +1,18 @@
+{% extends "challenges/layouts/base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="card shadow">
+            <div class="card-header fs-2">{{ title }}</div>
+            <div class="card-body">
+                <p class="fs-4">{{ author }} <small>(Rating: {{ rating }})</small></p>
+            </div>
+            <div class="card-footer">
+                {% if is_bestseller %}
+                    <p class="">The book is a bestseller!</p>
+                    {% else %}
+                    <p>The book is not a bestseller</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

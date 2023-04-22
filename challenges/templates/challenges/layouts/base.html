@@ -5,12 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-{#    <link rel="stylesheet" href="https://bootswatch.com/5/cerulean/bootstrap.css">#}
     <link rel="stylesheet" href="{% static "css/base.css" %}">
     <link rel="stylesheet" href="https://bootswatch.com/_vendor/bootstrap-icons/font/bootstrap-icons.css">
-    {% comment "Adding unnecessary padding to body top"%}
-        <link rel="stylesheet" href="https://bootswatch.com/_assets/css/custom.min.css">
-    {% endcomment %}
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Raleway&display=swap"
           rel="stylesheet">
@@ -34,6 +30,9 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "challenges-home" %}">Activities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "book-list" %}">Books</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
