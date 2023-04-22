@@ -1,19 +1,26 @@
 from django.shortcuts import render, redirect
+from django.db.models import Avg, Min
 
 from book.models import Book
-from challenges.views import not_found_page
 
 
 # Create your views here.
 def index(request):
-    books = Book.objects.all()
-    context = {"title": "book list", "books": books}
+    books = Book.objects.all().order_by("title")
+    num_of_books = books.count()
+    average_ratings = books.aggregate(Avg("rating"), Min("rating"))
+    context = {
+        "title": "book list",
+        "books": books,
+        "total_books": num_of_books,
+        "average_ratings": average_ratings,
+    }
     return render(request, "book/index.html", context)
 
 
-def detail(request, pk):
+def detail(request, slug):
     try:
-        book = Book.objects.get(pk=pk)
+        book = Book.objects.get(slug=slug)
     except Book.DoesNotExist:
         return redirect("not-found")
     context = {
