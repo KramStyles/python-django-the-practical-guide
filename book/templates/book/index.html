@@ -1,0 +1,12 @@
+{% extends "challenges/layouts/base.html" %}
+{% block content %}
+    <div class="jumbotron shadow">
+    <h1>Book List</h1>
+    <p class="fs-5">Welcome to the book list</p>
+    </div>
+    <div class="list-group">
+        {% for book in books %}
+            <a href="#" class="list-group-item list-group-item-action">{{ book.title|title }}. </a>
+        {% endfor %}
+    </div>
+{% endblock %}
