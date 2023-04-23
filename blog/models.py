@@ -1,5 +1,6 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.shortcuts import reverse
 
 from book.models import Author
 
@@ -20,9 +21,16 @@ class Post(models.Model):
     image_name = models.CharField(max_length=250)
     slug = models.SlugField(blank=True, unique=True)
     content = models.TextField(validators=[MinLengthValidator(10)])
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name="tags")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("blog-post-details", args=[self.slug])
+
+    def save(self, *args, **kwargs):
+        self.excerpt = self.excerpt.replace("-", " ").capitalize()
+        super().save(*args, **kwargs)
