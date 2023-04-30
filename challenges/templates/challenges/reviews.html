@@ -1,9 +1,29 @@
 {% extends "challenges/layouts/base.html" %}
 {% block content %}
+    <style>
+    span.error input{
+        outline: 2px solid indianred;
+    }
+    </style>
     <h2>Hello Reviews</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button class="btn btn-primary">Submit</button>
-    </form>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field.label }}
+                    {% if field.errors %}
+                        <span class="error">{{ field }}</span>
+                        {% else %}
+                        <div class="my-2">{{ field }}</div>
+                    {% endif %}
+                    {{ field.errors }}
+                {% endfor %}
+
+                <div class="d-grid mt-3">
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
