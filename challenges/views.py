@@ -1,6 +1,8 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import reverse, redirect, render
 
+from challenges.forms import ReviewForm
+
 # Create your views here.
 
 daily_challenges = {
@@ -54,7 +56,15 @@ def daily_challenge_by_number(request, day):
 
 
 def reviews(request):
-    context = {"title": "reviews"}
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            # username = form.cleaned_data.get("username")
+            # password = form.cleaned_data.get("password")
+    else:
+        form = ReviewForm()
+    context = {"title": "reviews", "form": form}
     return render(request, "challenges/reviews.html", context)
 
 

@@ -1,4 +1,9 @@
 {% extends "challenges/layouts/base.html" %}
 {% block content %}
     <h2>Hello Reviews</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-primary">Submit</button>
+    </form>
 {% endblock %}
