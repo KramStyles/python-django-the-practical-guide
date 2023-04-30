@@ -12,21 +12,21 @@
     </div>
 
     <div class="row justify-content-center">
-        {% for item in '12345678'|make_list %}
+{#        {% for item in '12345678'|make_list %}#}
+        {% for post in posts %}
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <small class="card-header fw-bold text-center">Title</small>
+                    <small class="card-header fw-bold text-center">{{ post.title }}</small>
                     <div class="card-body p-0"></div>
-                    <span class="d-none">
-                        {% cycle "img1.jpeg" "img2.jpeg" "img3.jpeg" "img4.jpeg" "img5.jpeg" as image_name %}
-                    </span>
-                    <img src="{% static "blog/images/uploads/"|add:image_name %}" alt="Image"
+{#                    <span class="d-none">#}
+{#                        {% cycle "journey.jpeg" "programming_fun.jpeg" "csharp.jpeg" "img4.jpeg" "img5.jpeg" as image_name %}#}
+{#                    </span>#}
+                    <img src="{% static "blog/images/uploads/"|add:post.image_name %}" alt="Image"
                          class="img-thumbnail rounded">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+                        <p class="card-text text-justify">{{ post.excerpt }}...</p>
                         <div class="d-grid">
-                            <a class="btn btn-outline-primary btn-sm" href="{% url "blog-post-details" item %}">View Post</a>
+                            <a class="btn btn-outline-primary btn-sm" href="{{ post.get_absolute_url }}">View Post</a>
                         </div>
                     </div>
                 </div>

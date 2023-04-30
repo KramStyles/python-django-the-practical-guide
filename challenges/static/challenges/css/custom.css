@@ -1,5 +1,5 @@
 /*Custom css file*/
-.jumbotron{
+.jumbotron {
     min-height: 200px;
     background-color: var(--bs-secondary);
     display: flex;
@@ -8,4 +8,35 @@
     padding: 1.5rem;
     margin-bottom: 1rem;
     border-radius: 10px;
+}
+
+body {
+    font-family: Montserrat, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Poppins, sans-serif;
+}
+
+a {
+    font-family: Raleway, sans-serif !important;
+}
+
+.raleway {
+    font-family: Raleway, sans-serif !important;
+}
+
+.poppins {
+    font-family: Poppins, sans-serif !important;
+}
+
+.montserrat {
+    font-family: Montserrat, sans-serif !important;
+}
+
+.text-justify {
+    text-align: justify !important;
+}
+.card-body > div {
+    margin: 10px auto;
 }
