@@ -6,4 +6,5 @@ urlpatterns = [
     path("<str:day>", views.index, name="weekly-activities"),
     path("", views.challenge_home, name="challenges-home"),
     path("404/", views.not_found_page, name="not-found"),
+    path("reviews/", views.reviews, name="reviews")
 ]
