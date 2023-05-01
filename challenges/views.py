@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import reverse, redirect, render
+from django.views import View
 
 from challenges.forms import ReviewForm, ReviewModelForm
 from challenges.models import Review
@@ -68,14 +69,47 @@ def reviews(request):
             #     review=data.get("review_text"),
             # )
             form.save()
-            context.update({"status": "success", "message": "Details saved successfully"})
+            context.update(
+                {"status": "success", "message": "Details saved successfully"}
+            )
             form = ReviewModelForm()
         else:
-            context.update({"status": "error", "message": "Error(s) occurred. Find information below!"})
+            context.update(
+                {
+                    "status": "error",
+                    "message": "Error(s) occurred. Find information below!",
+                }
+            )
     else:
         form = ReviewModelForm()
     context["form"] = form
     return render(request, "challenges/reviews.html", context)
+
+
+class Reviews(View):
+    def __init__(self):
+        self.context = {"title": "reviews with class"}
+
+    def get(self, request):
+        self.context["form"] = ReviewModelForm()
+        return render(request, "challenges/reviews.html", self.context)
+
+    def post(self, request):
+        form = ReviewModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            self.context.update(
+                {"status": "success", "message": "Details saved successfully"}
+            )
+            form = ReviewModelForm()
+        else:
+            self.context.update(
+                {
+                    "status": "error",
+                    "message": "Error(s) occurred. Find information below!",
+                }
+            )
+        return render(request, "challenges/reviews.html", self.context)
 
 
 def not_found_page(request):
