@@ -1,7 +1,8 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import reverse, redirect, render
 
-from challenges.forms import ReviewForm
+from challenges.forms import ReviewForm, ReviewModelForm
+from challenges.models import Review
 
 # Create your views here.
 
@@ -56,19 +57,31 @@ def daily_challenge_by_number(request, day):
 
 
 def reviews(request):
+    context = {"title": "reviews"}
     if request.method == "POST":
-        form = ReviewForm(request.POST)
+        form = ReviewModelForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
-            # username = form.cleaned_data.get("username")
-            # password = form.cleaned_data.get("password")
+            # data = form.cleaned_data
+            # Review.objects.create(
+            #     username=data.get("username"),
+            #     ratings=data.get("ratings"),
+            #     review=data.get("review_text"),
+            # )
+            form.save()
+            context.update({"status": "success", "message": "Details saved successfully"})
+            form = ReviewModelForm()
+        else:
+            context.update({"status": "error", "message": "Error(s) occurred. Find information below!"})
     else:
-        form = ReviewForm()
-    context = {"title": "reviews", "form": form}
+        form = ReviewModelForm()
+    context["form"] = form
     return render(request, "challenges/reviews.html", context)
 
 
 def not_found_page(request):
     # Todo: Ensure you fix this up for valid 404 page so when we call raise http404, this shows
-    context = {"title": "page not found", "reason": "We can't find what you are searching for"}
+    context = {
+        "title": "page not found",
+        "reason": "We can't find what you are searching for",
+    }
     return render(request, "challenges/404.html", context)
