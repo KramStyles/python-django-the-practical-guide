@@ -1,10 +1,7 @@
 {% extends "challenges/layouts/base.html" %}
 {% block content %}
-    <style>
-        span.error input {
-            outline: 2px solid indianred;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/form.css" %}">
     <h2>Hello Reviews</h2>
     <div class="row">
         <div class="col-md-6 offset-md-3">

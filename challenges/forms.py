@@ -3,7 +3,14 @@ from django import forms
 from challenges.models import Review
 
 
-class ReviewForm(forms.Form):
+class BaseForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fields in self.visible_fields():
+            fields.field.widget.attrs["class"] = "form-control my-1"
+
+
+class ReviewForm(BaseForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for fields in self.visible_fields():
@@ -22,7 +29,7 @@ class ReviewForm(forms.Form):
     ratings = forms.IntegerField(min_value=1, max_value=5, label="Your Ratings")
 
 
-class ReviewModelForm(forms.ModelForm):
+class ReviewModelForm(BaseForm, forms.ModelForm):
     class Meta:
         model = Review
         fields = "__all__"
@@ -33,8 +40,3 @@ class ReviewModelForm(forms.ModelForm):
                 "max_length": "Maximum of 100 Characters exceeded.",
             },
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for fields in self.visible_fields():
-            fields.field.widget.attrs["class"] = "form-control my-1"
