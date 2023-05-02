@@ -36,3 +36,7 @@ class ModelProfileView(FormView):
     form_class = ModelProfileForm
     template_name = "user_profile/model-form.html"
     success_url = "/profile/model-form-view/"
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
