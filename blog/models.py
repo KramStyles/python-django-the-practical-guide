@@ -34,3 +34,14 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.excerpt = self.excerpt.replace("-", " ").capitalize()
         super().save(*args, **kwargs)
+
+
+class Comment(models.Model):
+    user_name = models.CharField(max_length=100)
+    user_email = models.EmailField()
+    text = models.TextField(verbose_name="Comment", max_length=500)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.user_name}"

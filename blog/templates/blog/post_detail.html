@@ -21,6 +21,24 @@
                     {{ data.content|safe }}
                 </div>
             </div>
+            <div class="container">
+            <h2 class="my-4">Add Comment</h2>
+                <form action="{% url "blog-post-details" data.slug %}" class="my-3" method="post">
+                    {% csrf_token %}
+                    {% for field in comment_form %}
+                        {{ field.label }}
+                        {% if field.errors %}
+                            <span class="error">{{ field }}</span>
+                        {% else %}
+                            <div class="my-2">{{ field }}</div>
+                        {% endif %}
+                        {{ field.errors }}
+                    {% endfor %}
+                    <div class="d-grid my-3">
+                        <button class="btn btn-secondary">Save Comment</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}
