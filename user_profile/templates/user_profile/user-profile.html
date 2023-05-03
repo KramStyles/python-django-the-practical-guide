@@ -1,0 +1,12 @@
+{% extends "challenges/layouts/base.html" %}
+{% block content %}
+
+    <div class="row">
+        <h2>User Profiles</h2>
+        {% for profile in userprofile_list %}
+            <div class="col-md-2 text-center my-3 px-1">
+                <img src="{{ profile.image.url }}" alt="Path" width="100px">
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

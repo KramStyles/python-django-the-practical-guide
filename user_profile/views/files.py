@@ -1,8 +1,9 @@
 from django.shortcuts import render, reverse
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView, ListView
 
 from user_profile.forms import ProfileForm, ModelProfileForm
+from user_profile.models import UserProfile
 
 
 def store_files(file):
@@ -24,7 +25,7 @@ class CreateProfileView(View):
 class ProfileView(FormView):
     form_class = ProfileForm
     template_name = "user_profile/upload-form.html"
-    success_url = "/profile/form-view/"
+    success_url = "/profile/user-profiles/"
 
     def form_valid(self, form):
         file = form.files.get("user_image")
@@ -35,8 +36,28 @@ class ProfileView(FormView):
 class ModelProfileView(FormView):
     form_class = ModelProfileForm
     template_name = "user_profile/model-form.html"
-    success_url = "/profile/model-form-view/"
+    success_url = "/profile/user-profiles/"
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class UserProfileCreateView(CreateView):
+    """This is same to the ModelProfileView but shorter. No need for forms"""
+
+    template_name = "user_profile/model-form.html"
+    success_url = "/profile/user-profiles/"
+    model = UserProfile
+    # fields = "__all__"
+    form_class = ModelProfileForm
+
+
+class UserProfileListView(ListView):
+    model = UserProfile
+    template_name = "user_profile/user-profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "User Profiles"
+        return context
