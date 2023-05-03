@@ -1,6 +1,6 @@
 from django.shortcuts import render, reverse
 from django.views import View
-from django.views.generic import FormView, CreateView, ListView
+from django.views.generic import FormView, CreateView, ListView, DetailView
 
 from user_profile.forms import ProfileForm, ModelProfileForm
 from user_profile.models import UserProfile
@@ -61,3 +61,9 @@ class UserProfileListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "User Profiles"
         return context
+
+
+class UserProfileDetailView(DetailView):
+    model = UserProfile
+    template_name = "user_profile/user-profile-detail.html"
+    context_object_name = "profile"

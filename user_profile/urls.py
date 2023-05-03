@@ -8,4 +8,5 @@ urlpatterns = [
     path("model-form-view/", views.ModelProfileView.as_view(), name="model-profile"),
     path("create-form-view/", views.UserProfileCreateView.as_view(), name="user-profile-create-view"),
     path("user-profiles/", views.UserProfileListView.as_view(), name="user-profile-list-view"),
+    path("user-detail/<int:pk>/", views.UserProfileDetailView.as_view(), name="user-profile-detail-view"),
 ]
