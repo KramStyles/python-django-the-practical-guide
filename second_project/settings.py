@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "challenges",
     "blog",
-    "book"
+    "book",
+    "user_profile",
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,10 @@ USE_TZ = True
 STATIC_URL = "static/"
 # Add Static Dirs so django can pick static in root level
 STATICFILES_DIRS = [BASE_DIR / "static"]
+# For storing files from model (check user_profile model)
+MEDIA_ROOT = BASE_DIR / "uploads"
+# For exposing Media URL to frontend
+MEDIA_URL = "/uploads/"  # You can call it anything
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

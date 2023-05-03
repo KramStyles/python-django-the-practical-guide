@@ -1,0 +1,9 @@
+span.error input {
+    outline: 2px solid indianred;
+}
+.errorlist{
+    list-style: none;
+    color: indianred;
+    padding-left: 0;
+    padding-top: 5px;
+}

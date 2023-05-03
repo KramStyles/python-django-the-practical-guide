@@ -1,7 +1,10 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import reverse, redirect, render
+from django.views import View
+from django.views.generic import TemplateView, DetailView
 
-from challenges.forms import ReviewForm
+from challenges.forms import ReviewForm, ReviewModelForm
+from challenges.models import Review
 
 # Create your views here.
 
@@ -56,19 +59,92 @@ def daily_challenge_by_number(request, day):
 
 
 def reviews(request):
+    context = {"title": "reviews"}
     if request.method == "POST":
-        form = ReviewForm(request.POST)
+        form = ReviewModelForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
-            # username = form.cleaned_data.get("username")
-            # password = form.cleaned_data.get("password")
+            # data = form.cleaned_data
+            # Review.objects.create(
+            #     username=data.get("username"),
+            #     ratings=data.get("ratings"),
+            #     review=data.get("review_text"),
+            # )
+            form.save()
+            context.update(
+                {"status": "success", "message": "Details saved successfully"}
+            )
+            form = ReviewModelForm()
+        else:
+            context.update(
+                {
+                    "status": "error",
+                    "message": "Error(s) occurred. Find information below!",
+                }
+            )
     else:
-        form = ReviewForm()
-    context = {"title": "reviews", "form": form}
-    return render(request, "challenges/reviews.html", context)
+        form = ReviewModelForm()
+    context["form"] = form
+    return render(request, "challenges/reviews/reviews.html", context)
+
+
+class Reviews(View):
+    def __init__(self):
+        self.context = {"title": "reviews with class"}
+
+    def get(self, request):
+        self.context["form"] = ReviewModelForm()
+        return render(request, "challenges/reviews/reviews.html", self.context)
+
+    def post(self, request):
+        form = ReviewModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            self.context.update(
+                {"status": "success", "message": "Details saved successfully"}
+            )
+            form = ReviewModelForm()
+        else:
+            self.context.update(
+                {
+                    "status": "error",
+                    "message": "Error(s) occurred. Find information below!",
+                }
+            )
+        return render(request, "challenges/reviews/reviews.html", self.context)
+
+
+class BaseView:
+    def __init__(self):
+        self.context = {}
+
+    def get_context_data(self, **kwargs):
+        self.context = super().get_context_data(**kwargs)
+        return self.context
+
+
+class ReviewListTemplateView(BaseView, TemplateView):
+    template_name = "challenges/reviews/reviews-list.html"
+
+    def get_context_data(self, **kwargs):
+        self.context["title"] = "Review List"
+        self.context["reviews"] = Review.objects.all()
+        return self.context
+
+
+class ReviewDetailView(BaseView, DetailView):
+    model = Review
+    template_name = "challenges/reviews/reviews-detail.html"
+
+    def get_context_data(self, **kwargs):
+        self.context = super().get_context_data(**kwargs)
+        self.context["title"] = f"Ratings by {self.object.username.title()}"
+        return self.context
 
 
 def not_found_page(request):
     # Todo: Ensure you fix this up for valid 404 page so when we call raise http404, this shows
-    context = {"title": "page not found", "reason": "We can't find what you are searching for"}
+    context = {
+        "title": "page not found",
+        "reason": "We can't find what you are searching for",
+    }
     return render(request, "challenges/404.html", context)
