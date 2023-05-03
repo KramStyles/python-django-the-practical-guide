@@ -1,5 +1,4 @@
 {% extends "challenges/layouts/base.html" %}
-{% load static %}
 {% block content %}
     <div class="card text-white bg-primary mb-3">
         <div class="card-header">Welcome</div>
@@ -21,7 +20,7 @@
 {#                    <span class="d-none">#}
 {#                        {% cycle "journey.jpeg" "programming_fun.jpeg" "csharp.jpeg" "img4.jpeg" "img5.jpeg" as image_name %}#}
 {#                    </span>#}
-                    <img src="{% static "blog/images/uploads/"|add:post.image_name %}" alt="Image"
+                    <img src="{{ post.image_name.url }}" alt="Image"
                          class="img-thumbnail rounded">
                     <div class="card-body">
                         <p class="card-text text-justify">{{ post.excerpt }}...</p>

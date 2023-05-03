@@ -18,7 +18,7 @@ class Post(models.Model):
     title = models.CharField(max_length=250)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name="posts")
     excerpt = models.CharField(max_length=150, blank=True)
-    image_name = models.CharField(max_length=250)
+    image_name = models.ImageField(upload_to="blog")
     slug = models.SlugField(blank=True, unique=True)
     content = models.TextField(validators=[MinLengthValidator(10)])
     tags = models.ManyToManyField(Tag, related_name="tags")

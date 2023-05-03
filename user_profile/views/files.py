@@ -69,7 +69,7 @@ class UserProfileDetailView(DetailView):
     context_object_name = "profile"
 
     def get_context_data(self, **kwargs):
-        favorite_id = self.request.session["favorite_profile"]
+        favorite_id = self.request.session.get("favorite_profile")
         instance_id = self.object.id
 
         context = super().get_context_data(**kwargs)

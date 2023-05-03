@@ -1,5 +1,4 @@
 {% extends "challenges/layouts/base.html" %}
-{% load static %}
 {% block content %}
     <div class="row">
         <div class="col-md-10 offset-1">
@@ -16,7 +15,7 @@
                     <p>Email Address: <span class="fw-bold text-primary">{{ data.author.email_address }}</span></p>
                     <p>Date Published: <span class="fw-bold text-primary">{{ data.updated_at }}</span></p>
                 </div>
-                <img src="{% static "blog/images/uploads/"|add:data.image_name %}" alt="Image"
+                <img src="{{ data.image_name.url }}" alt="Image"
                      class="img-thumbnail rounded">
                 <div class="card-body">
                     {{ data.content|safe }}
