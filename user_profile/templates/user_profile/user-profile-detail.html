@@ -3,8 +3,21 @@
 
     <div class="row">
         <h2>User Profile Detail</h2>
-            <div class="col-md-8 offset-md-2 text-center my-3 px-1">
-                    <img src="{{ profile.image.url }}" alt="Path" width="100%" class="rounded">
+        <div class="col-md-8 offset-md-2 text-center my-3 px-1">
+            <img src="{{ profile.image.url }}" alt="Path" width="100%" class="rounded">
+        </div>
+        <form action="{% url "favorite-profile" %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="favorite_id" value="{{ profile.pk }}">
+            <div class="row">
+                <div class="col-md-4 offset-md-4 d-grid my-3">
+                    {% if is_favorite %}
+                        <button class="btn btn-secondary" disabled>This is your Favorite</button>
+                    {% else %}
+                        <button class="btn btn-secondary">Set Favorite</button>
+                    {% endif %}
+                </div>
             </div>
+        </form>
     </div>
 {% endblock %}

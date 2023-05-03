@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.views import View
 from django.views.generic import FormView, CreateView, ListView, DetailView
 
@@ -67,3 +67,20 @@ class UserProfileDetailView(DetailView):
     model = UserProfile
     template_name = "user_profile/user-profile-detail.html"
     context_object_name = "profile"
+
+    def get_context_data(self, **kwargs):
+        favorite_id = self.request.session["favorite_profile"]
+        instance_id = self.object.id
+
+        context = super().get_context_data(**kwargs)
+        context["is_favorite"] = favorite_id == str(instance_id)
+        context["title"] = f"Profile: {instance_id}"
+        return context
+
+
+class FavoriteProfileView(View):
+    def post(self, request):
+        favorite_id = request.POST.get("favorite_id")
+        # Store in a session
+        request.session["favorite_profile"] = favorite_id
+        return redirect(reverse("user-profile-detail-view", args=[favorite_id]))
