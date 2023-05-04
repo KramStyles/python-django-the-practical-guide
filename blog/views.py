@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from blog.forms import CommentForm
 from blog.models import Post
 
+
 # Create your views here.
 
 
@@ -48,14 +49,26 @@ class PostDetailView(DetailView):
     context_object_name = "data"
 
     def post(self, request, slug):
+        blog = get_object_or_404(Post, slug=slug)
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            comment_form.save()
-        return redirect("blog-post-details", slug=slug)
+            comment = comment_form.save(commit=False)  # To prevent the saving till we add post
+            comment.post = blog
+            comment.save()
+            return redirect("blog-post-details", slug=slug)
+
+        context = {
+            "title": f"News Post: {blog.title.title()}",
+            "data": blog,
+            "comment_form": comment_form,
+            "status": "error", "message": "An error occurred while saving comment. Check below!",
+        }
+        return render(request, "blog/post_detail.html", context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post_title = self.object.title.title()
         context["title"] = f"News Post: {post_title}"
         context["comment_form"] = CommentForm()
+        context["comments"] = self.object.comments.all()
         return context
