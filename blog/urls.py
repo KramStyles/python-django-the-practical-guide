@@ -7,4 +7,5 @@ urlpatterns = [
     path("posts/<slug:slug>/", views.PostDetailView.as_view(), name="blog-post-details"),
     path("posts_function/", views.post, name="blog-post-function"),
     path("posts_function/<slug:slug>/", views.post_details, name="blog-post-details-function"),
+    path("bookmark/", views.BookmarkView.as_view(), name="bookmark-view"),
 ]
