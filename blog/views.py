@@ -105,5 +105,15 @@ class BookmarkView(View):
             bookmarked.remove(bookmark_id)
 
         request.session["bookmarked"] = bookmarked
-
         return redirect("blog-post-details", slug=slug)
+
+    def get(self, request):
+        bookmarks = request.session.get("bookmarked")
+        if bookmarks:
+            bookmarks = [Post.objects.get(id=item) for item in bookmarks]
+        context = {
+            "title": "Bookmarks",
+            "bookmarks": bookmarks
+        }
+        return render(request, "blog/bookmark.html", context)
+
