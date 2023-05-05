@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 TEMPLATE_DIR = "%s/second_project/templates" % BASE_DIR
 
@@ -20,12 +21,12 @@ TEMPLATE_DIR = "%s/second_project/templates" % BASE_DIR
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-0%x+i8-+)xp3$2gus(5drt+t%+z5ss-3mx@j-21pud0if&cr$s"
+SECRET_KEY = "-0%x+i8-+)xp3$2gus(5drt+t%+z5ss-3mx@j-21pud0if&cr$s"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost"]
 
 # Application definition
 
