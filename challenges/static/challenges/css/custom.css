@@ -37,6 +37,11 @@ a {
 .text-justify {
     text-align: justify !important;
 }
+
 .card-body > div {
     margin: 10px auto;
+}
+
+.cur-pointer {
+    cursor: pointer !important;
 }

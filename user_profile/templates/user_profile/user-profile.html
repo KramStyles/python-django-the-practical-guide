@@ -3,6 +3,9 @@
 
     <div class="row">
         <h2>User Profiles</h2>
+        {% if not userprofile_list %}
+            <h4 class="text-center my-3">No Profiles yet!</h4>
+        {% endif %}
         {% for profile in userprofile_list %}
             <div class="col-md-2 text-center my-3 px-1">
                 <a href="{% url "user-profile-detail-view" profile.pk %}">
