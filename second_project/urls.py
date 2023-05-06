@@ -24,4 +24,5 @@ urlpatterns = [
     path("", include("blog.urls")),
     path("", include("book.urls")),
     path("profile/", include("user_profile.urls")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
